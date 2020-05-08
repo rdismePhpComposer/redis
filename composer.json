@@ -1,0 +1,20 @@
+{
+    "name": "rdisme/redis",
+    "description": "redis 操作类",
+    "authors": [
+        {
+            "name": "rdisme",
+            "email": "rendao.sun@foxmail.com"
+        }
+    ],
+    "keywords": [
+        "redis",
+        "php redis"
+    ],
+    "autoload": {
+        "psr-4": {
+            "Rredis\\": "src/"
+        }
+    },
+    "license": "MIT"
+}
