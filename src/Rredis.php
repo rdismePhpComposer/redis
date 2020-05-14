@@ -1,11 +1,13 @@
 <?php
+
 namespace Rdisme;
 
 /**
  * redis 缓存操作
  * 单例模式
  */
-class Rredis {
+class Rredis
+{
 
 	private $redis;
 	private static $_instance;
@@ -16,24 +18,28 @@ class Rredis {
 	 * connect 脚本执行完，释放连接
 	 * pconnect 脚本执行完，连接保持在php-fpm中
 	 */
-	private function __construct(array $params)
+	private function __construct(array $conf)
 	{
-        // 初始化参数
-        $host = isset($params['host'])? $params['host']: '127.0.0.1';
-        $port = isset($params['port'])? $params['port']: 6379;
-        // 建立连接
+		// 初始化参数
+		$host = isset($conf['host']) ? $conf['host'] : '127.0.0.1';
+		$port = isset($conf['port']) ? $conf['port'] : 6379;
+		$db   = isset($conf['db']) ? $conf['db'] : 0;
+		// 建立连接
 		$this->redis = new \Redis();
 		$this->redis->connect($host, $port);
+		$this->redis->select($db);
 	}
 
 
-	private function __clone() {}
+	private function __clone()
+	{
+	}
 
 
 	// 获取对象
 	public static function getInstance(array $params)
 	{
-		if (! self::$_instance instanceof self) {
+		if (!self::$_instance instanceof self) {
 			self::$_instance = new self($params);
 		}
 		return self::$_instance;
@@ -44,5 +50,4 @@ class Rredis {
 	{
 		return call_user_func_array(array($this->redis, $method), $params);
 	}
-
 }
