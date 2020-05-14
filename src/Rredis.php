@@ -1,5 +1,5 @@
 <?php
-namespace Rredis;
+namespace Rdisme;
 
 /**
  * redis 缓存操作
